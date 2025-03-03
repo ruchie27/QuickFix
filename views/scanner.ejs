@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+        }
+
+        .scanner-icon {
+            width: 100px;
+            height: 100px;
+            background: url('/scanner-icon.png') no-repeat center/cover;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        #scannerModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scannerContainer {
+            width: 80%;
+            max-width: 400px;
+            aspect-ratio: 1 / 1;
+            border: 5px solid white;
+            border-radius: 10px;
+            background-color: black;
+        }
+
+        #closeScanner {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .img{
+            height: 100%;
+            width: 100%;
+            background-size: contain;
+        }
+    </style>
+   
+</head>
+<body>
+    <div class="scanner-icon" onclick="openScanner()"><img class="img" src="/scanner.png"></div>
+    <h4>Click the scanner icon to scan a QR code</h4>
+
+    <div id="scannerModal">
+        <button id="closeScanner" onclick="closeScanner()">X</button>
+        <div id="scannerContainer"></div>
+    </div>
+
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    <script>
+        let html5QrCode;
+        const scannerModal = document.getElementById("scannerModal");
+        const scannerContainer = document.getElementById("scannerContainer");
+
+        function openScanner() {
+            scannerModal.style.display = "flex"; // Show modal
+
+            html5QrCode = new Html5Qrcode("scannerContainer");
+            html5QrCode.start(
+                { facingMode: "environment" }, 
+                { fps: 10, qrbox: 250 },      
+                (decodedText) => {
+                    // On successful scan
+                    html5QrCode.stop().then(() => {
+                        scannerModal.style.display = "none"; // Close modal
+                        // Redirect to another page with scanned data
+                        window.location.href = `/user/result?data=${encodeURIComponent(decodedText)}`;
+                    }).catch(console.error);
+                },
+                (errorMessage) => {
+                    // Handle decode errors (optional)
+                    console.warn(errorMessage);
+                }
+            ).catch((err) => console.error("Error starting QR Code scanner:", err));
+        }
+
+        function closeScanner() {
+            if (html5QrCode) {
+                html5QrCode.stop().then(() => {
+                    scannerModal.style.display = "none"; // Hide modal
+                }).catch(console.error);
+            }
+        }
+    </script>
+   
+</body>
+</html>

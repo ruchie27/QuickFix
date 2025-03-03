@@ -1,0 +1,72 @@
+/* .img{
+    height: 500px;
+    width: 500px;
+    background-image: url("../image/first.png");
+    background-size: cover;
+}
+ */
+/* style.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; /* Light background color */
+}
+
+.img {
+    width: 250px; /* Adjust size of the image */
+    height: 250px;
+    background-image: url("../image/first.png"); /* Replace with your actual image path */
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 20px; /* Space between image and paragraph */
+}
+
+.para {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 20px; /* Space between paragraph and button */
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+form button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+.sign{
+    text-decoration: none;
+}
+.box{
+    border:2px solid black;
+    border-radius: 15px;
+}
+.form-box{
+    padding: 30px !important;
+}
+.button{
+    border-radius: 10px !important;
+}
+
+.login-container{
+    margin-top: 1rem !important;
+    margin-left: 1rem !important;
+}

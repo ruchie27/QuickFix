@@ -1,0 +1,222 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* styles.css */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4; /* You can change the background color if needed */
+            font-family: Arial, sans-serif;
+        }
+
+        .main {
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            text-align: center;
+            padding: 30px;
+            background: #fff;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        .img img {
+            /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+            border-radius: 8px;
+            max-width: 60%;
+            height: auto;
+            margin-bottom: 60px;
+        }
+
+        /* Responsive Logo Size */
+        @media (max-width: 768px) {
+            .img img {
+                max-width: 60%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .img img {
+                max-width: 50%;
+            }
+        }
+
+        .btn {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #36454F;
+            color: white;
+            transition: background-color 0.3s ease;
+            width: 180px;
+        }
+
+        button:hover {
+            background-color: #83919a;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="main">
+        <div class="img">
+            <img src="./imgs.png" alt="">
+        </div>
+        <div class="btn">
+            <form action="/user/register" method="get">
+                <button class="btn1">Login as User</button>
+            </form>
+            <form action="/adminlogin" method="get">
+                <button class="btn2">Login as Admin</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login As</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 120px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .card h2 {
+            font-size: 16px;
+            font-weight: bold;
+            background: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="logo">
+            <img src="./logo.png" alt="DYP Logo">
+
+        </div>
+
+        <div class="options">
+            <form class="card" method="get" action="/user/register">
+                <button style="border: none; background-color: white;">
+                    <img src="./user.jpg" alt="User">
+                    <h2 >User</h2>
+                </button>
+            </form>
+            <form class="card" method="get" action="/adminLogin">
+                <button style="border: none; background-color: white;">
+                    <img src="./admin.jpg" alt="Admin">
+                    <h2 >Admin</h2>
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

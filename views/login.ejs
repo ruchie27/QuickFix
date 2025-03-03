@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Authentication</title>
+  <link rel="stylesheet" href="/css/login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  
+  <!-- Firebase Modular SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
+</head>
+<body>
+<div class="container">
+  <img src="/logo.png" alt="Logo" class="logo" />
+  <form class="login-form" id="login-form">
+    <input type="email" id="login-email" class="input-field" placeholder="Email" required>
+    <input type="text" id="login-key" class="input-field" placeholder="Enter Key" required>
+    <button class="login-button" type="submit">Login</button>
+    <span>Not yet registered? <a class="sign" href="/user/register">Sign Up</a></span>
+  </form>
+</div>
+
+<script type="module">
+  // Import Firebase modules
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js';
+  import { getFirestore, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js';
+
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDlayDne63U7NGZve-zZspmOhh-4sfXLk8",
+    authDomain: "scan2report-8e53c.firebaseapp.com",
+    databaseURL: "https://scan2report-8e53c-default-rtdb.firebaseio.com",
+    projectId: "scan2report-8e53c",
+    storageBucket: "scan2report-8e53c.appspot.com",
+    messagingSenderId: "73926958356",
+    appId: "1:73926958356:web:21d538221b7360f293b601",
+    measurementId: "G-63KQ1B979T"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Login logic
+  const loginForm = document.getElementById('login-form');
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('login-email').value.trim();
+    const enteredKey = document.getElementById('login-key').value.trim();
+    const fixedKey = "DYP"; // Fixed key
+
+    if (enteredKey !== fixedKey) {
+      alert("Invalid key. Access denied.");
+      return;
+    }
+
+    try {
+      // Query Firestore to find user by email (since Android stores with random IDs)
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        // User exists, proceed to scanner
+        window.location.href = "/user/scanner";
+      } else {
+        alert("User not found. Please register.");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Login failed. Please try again.");
+    }
+  });
+</script>
+</body>
+</html>

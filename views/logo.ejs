@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logo Animation</title>
+  <style>
+    body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #f3f4f6; /* Light background */
+  }
+  
+  .container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .logo img {
+    position: absolute;
+    top: -150px; /* Start above the viewport */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center horizontally and vertically */
+    width: 350px; /* Default size for larger screens */
+    animation: drop 3s ease-out forwards;
+  }
+  
+  /* Media query for tablets and smaller screens */
+  @media (max-width: 768px) {
+    .logo img {
+      width: 250px; /* Smaller logo for tablets */
+    }
+  }
+  
+  /* Media query for mobile devices */
+  @media (max-width: 480px) {
+    .logo img {
+      width: 200px; /* Even smaller logo for mobile devices */
+    }
+  }
+  
+  @keyframes drop {
+    0% {
+      top: -150px; /* Start above the viewport */
+      opacity: 0;
+    }
+    100% {
+      top: 50%; /* Stop at the vertical center */
+      opacity: 1;
+    }
+  }
+</style>
+  <!-- <link rel="stylesheet" href="./index1.css" /> -->
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo" id="logo">
+      <img src="./applogo.png" alt="Logo" />
+    </div>
+  </div>
+  <script>
+
+    // Get the logo element
+const logo = document.getElementById("logo");
+
+// Listen for the animationend event
+logo.addEventListener("animationend", () => {
+  // Redirect to the next page
+  window.location.href = "/getStarted"; // Change this to your desired URL
+});
+
+  </script> <!-- Link to JavaScript file -->
+</body>
+</html>

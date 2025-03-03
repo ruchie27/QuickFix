@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+    import { getDatabase, ref, onValue, update, remove, set } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+
+    // 🔥 Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDlayDne63U7NGZve-zZspmOhh-4sfXLk8",
+      authDomain: "scan2report-8e53c.firebaseapp.com",
+      databaseURL: "https://scan2report-8e53c-default-rtdb.firebaseio.com",
+      projectId: "scan2report-8e53c",
+      storageBucket: "scan2report-8e53c.appspot.com",
+      messagingSenderId: "73926958356",
+      appId: "1:73926958356:web:21d538221b7360f293b601",
+      measurementId: "G-63KQ1B979T"
+    };
+
+    // 🚀 Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    const pendingContainer = document.getElementById("pending-container");
+    const completedContainer = document.getElementById("completed-container");
+
+    function createRecordContainer(data, key, source) {
+      const container = document.createElement("div");
+      container.className = "container";
+
+      container.innerHTML = `
+        <p><strong>${data.buildingName || "N/A"}</strong> </p>
+        <p><strong>Classroom:</strong> ${data.classroomNumber || "N/A"}</p>
+        <p><strong>Department:</strong> ${data.departmentName || "N/A"}</p>
+        <p><strong>Issue Date:</strong> ${data.issueDate || "N/A"}</p>
+        <p><strong>Status:</strong> ${data.status || "Pending"}</p>
+        <p><strong>Description:</strong> ${data.userDescription || "N/A"}</p>
+        <p><strong>Phone:</strong> ${data.phone || "N/A"}</p>
+      `;
+
+      const button = document.createElement("button");
+      button.className = "status-btn";
+      button.textContent = data.status === "Completed" ? "Completed" : "Mark as Completed";
+
+      button.addEventListener("click", () => {
+        if (data.status === "Completed") return;
+
+        // ✅ Mark as completed and set a completion timestamp
+        const updateData = {
+          status: "Completed",
+          completionDate: new Date().toISOString(),
+        };
+
+        update(ref(database, `Reports/${key}`), updateData).then(() => {
+          button.textContent = "Completed";
+          completedContainer.appendChild(container);
+
+          // 📩 Open Mobile SMS App with pre-filled message
+          const phoneNumber = data.phone; // User's registered phone number
+          const message = encodeURIComponent(`Dear user, your reported issue (${data.userDescription}) has been solved. Thank you!`);
+          window.location.href = `sms:${phoneNumber}?body=${message}`;
+
+          // ✅ Move to history after 1 minute
+          setTimeout(() => {
+            set(ref(database, `History/${key}`), data)
+              .then(() => remove(ref(database, `Reports/${key}`)))
+              .then(() => completedContainer.removeChild(container));
+          }, 60000);
+        });
+      });
+
+      container.appendChild(button);
+      return container;
+    }
+
+    function fetchData(source, container, statusFilter) {
+      onValue(ref(database, source), (snapshot) => {
+        container.innerHTML = "";
+        snapshot.forEach((childSnapshot) => {
+          const data = childSnapshot.val();
+          const key = childSnapshot.key;
+          if (data.status === statusFilter) {
+            container.appendChild(createRecordContainer(data, key, source));
+          }
+        });
+      });
+    }
+
+    fetchData("Reports", pendingContainer, "Pending");
+    fetchData("Reports", completedContainer, "Completed");
+
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1, h2 {
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .container {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      background: #ffffff;
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-btn {
+      background-color: #36454F;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .status-btn:hover {
+      background-color: #83919a;
+    }
+
+    #pending-container, #completed-container {
+      width: 100%;
+      max-width: 800px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Page</h1>
+  <h2>Pending Tasks</h2>
+  <div id="pending-container"></div>
+  <h2>Completed Tasks</h2>
+  <div id="completed-container"></div>
+</body>
+</html>

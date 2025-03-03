@@ -1,0 +1,31 @@
+body{
+    background-color: rgb(203, 255, 238);
+}
+
+.box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.box1 {
+
+    width: 200px;
+    height: 200px;
+    background-color: fuchsia;
+   
+    animation-name: anim;
+    animation-duration: 3s;
+    animation-delay: 1s;
+}
+
+@keyframes anim {
+    from{
+        left: 0;
+        rotate: 0;
+    }
+    to{
+        left: 10%;
+        rotate: 360deg;
+    }
+}

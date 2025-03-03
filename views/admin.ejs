@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Layout</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Center container for layout */
+        .container {
+            text-align: center;
+        }
+
+        /* Logo styling */
+        .logo {
+            width: 150px;
+            height: 140px;
+            margin-top: 100px;
+            margin-bottom: 5rem;
+        }
+
+        /* Button styling */
+        .btn {
+            display: block;
+            width: 150px;
+            margin: 24px auto;
+            padding: 12px 0;
+            font-size: 20px;
+            color: white;
+            background-color: #36454F;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect for buttons */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="logo.png" alt="Logo" class="logo"><br>
+        <form action="/admin/record">
+            <button class="btn record" id="Record">Record</button>
+        </form>
+        <form action="/admin/history">
+            <button class="btn history" id="History">History</button><br>
+        </form>
+    </div>
+
+</body>
+
+</html>

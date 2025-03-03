@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logo Animation</title>
+  <link rel="stylesheet" href="./index1.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="logo" id="logo">
+      <img src="../applogo.png" alt="Logo" />
+    </div>
+  </div>
+  <script>
+
+    // Get the logo element
+const logo = document.getElementById("logo");
+
+// Listen for the animationend event
+logo.addEventListener("animationend", () => {
+  // Redirect to the next page
+  window.location.href = "/qr"; // Change this to your desired URL
+});
+
+  </script> <!-- Link to JavaScript file -->
+</body>
+</html>
